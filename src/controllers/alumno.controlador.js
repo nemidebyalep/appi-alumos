@@ -30,7 +30,7 @@ const createalumnos = async(req, res) => {
         await pool.query('INSERT INTO alumnos(nombres, apellidos, direccion, telefono, escuela_id) values ($1, $2, $3, $4, $5)', [nombres, apellidos, direccion, telefono, escuela_id]);
 
         return res.status(200).json(
-            `Alumno ${nombres} creado correctamente...!`);
+            `Alumno ${nombres} registrado correctamente...!`);
 
     } catch (error) {
         return res.status(500).json('Algo salio mal.!')
@@ -43,7 +43,7 @@ const deletealumnos = async(req, res = response) => {
         const eliminar_alumnos = await pool.query('delete from alumnos where idalumno = $1 RETURNING *', [idalumno])
         if (eliminar_alumnos.rows.length === 0) {
             return res.status(400).json({
-                msg: 'No hay alumnos!'
+                msg: 'No exite alumnos!'
             })
         }
         res.status(200).json({
@@ -61,7 +61,9 @@ const updateAlumno = async(req, res) => {
         const id = parseInt(req.params.id);
         const { nombres, apellidos, direccion, telefono, escuela_id } = req.body;
         const response = await pool.query('UPDATE alumnos set nombres = $1, apellidos = $2, direccion = $3, telefono = $4, escuela_id = $5 where idalumno = $6', [nombres, apellidos, direccion, telefono, escuela_id, id]);
+
         return res.status(200).json(response.rows);
+
     } catch (e) {
         console.log(e)
         return res.status(500).json('Internal Server error...!');
