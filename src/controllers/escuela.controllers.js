@@ -70,7 +70,6 @@ const updatEscuela = async(req, res) => {
 module.exports = {
     getescuela,
     creatEscuela,
-    deletEscuela,
     updatEscuela,
     BuscarEscuelaID
 }
